@@ -14,5 +14,18 @@ Rails.application.routes.draw do
     end
 
   end
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  get '/', to: 'static#home', as: 'home'
+
+  get '/blog:id', to: 'static#show'
+
+  get '/profile', to: 'itinerary#showAll'
+  get '/profile/:id', to: 'itinerary#edit'
+  post '/profile/:id', to: 'itinerary#update'
+  post '/profile', to: 'itinerary#create'
+
+  post '/activity', to: 'activity#create'
+  patch '/activity', to: 'activity#update'
+  delete '/activity', to: 'activity#destroy'
+
 end
