@@ -17,11 +17,11 @@ Rails.application.routes.draw do
 
   get '/', to: 'static#home', as: 'home'
 
-  get '/blog:id', to: 'static#show'
+  get '/blog/:id', to: 'static#show'
 
   get '/profile', to: 'itinerary#showAll'
   get '/profile/:id', to: 'itinerary#edit'
-  post '/profile/:id', to: 'itinerary#update'
+  patch '/profile/:id', to: 'itinerary#update'
   post '/profile', to: 'itinerary#create'
 
   post '/activity', to: 'activity#create'
