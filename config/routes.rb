@@ -10,7 +10,6 @@ Rails.application.routes.draw do
 
     namespace :v1 do
       get 'users/sync', to: 'users#sync'
-      get 'users/test', to: 'users#test'
     end
 
   end

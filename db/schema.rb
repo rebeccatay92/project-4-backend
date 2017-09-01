@@ -10,10 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170830172140) do
+ActiveRecord::Schema.define(version: 20170901021304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.bigint "itinerary_id"
+    t.string "place"
+    t.string "latitude"
+    t.string "longitude"
+    t.string "blurb"
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["itinerary_id"], name: "index_activities_on_itinerary_id"
+  end
+
+  create_table "itineraries", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "title"
+    t.string "country"
+    t.string "bannerUrl"
+    t.date "startDate"
+    t.date "endDate"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_itineraries_on_user_id"
+  end
 
   create_table "oauth_access_grants", id: :serial, force: :cascade do |t|
     t.integer "resource_owner_id", null: false
@@ -53,6 +77,14 @@ ActiveRecord::Schema.define(version: 20170830172140) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
+  create_table "photos", force: :cascade do |t|
+    t.bigint "activity_id"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_id"], name: "index_photos_on_activity_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -70,6 +102,9 @@ ActiveRecord::Schema.define(version: 20170830172140) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "activities", "itineraries"
+  add_foreign_key "itineraries", "users"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "photos", "activities"
 end
