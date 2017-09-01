@@ -75,10 +75,12 @@ before_action -> { doorkeeper_authorize! :api }
       id = e["id"]
       Photo.delete(id)
     end
+    deletedActivity = Activity.delete(activity_id)
 
     render json: {
       response: "remove the activity and associated photos",
       activity_id: activity_id,
+      deletedActivity: deletedActivity,
       deletedPhotos: deletedPhotos
     }
   end
