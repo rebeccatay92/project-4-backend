@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get '/profile/:id', to: 'itinerary#show'
   patch '/profile/:id', to: 'itinerary#update'
   post '/profile', to: 'itinerary#create'
+  delete '/profile/:id', to: 'itinerary#destroy'
 
   post '/activity', to: 'activity#create'
   patch '/activity', to: 'activity#update'

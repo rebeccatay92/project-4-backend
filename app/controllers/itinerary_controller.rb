@@ -32,16 +32,58 @@ before_action -> { doorkeeper_authorize! :api }
   end
 
   def create
+    user_id = current_resource_owner["id"]
+
+    request = params["data"]
+    createdItinerary = Itinerary.create({
+      user_id: user_id,
+      title: request["title"],
+      country: request["country"],
+      startDate: request["startDate"],
+      endDate: request["endDate"]
+      })
     render json: {
-      response: "create new itinerary"
-    }
-  end
-  
-  def update
-    render json: {
-      response: "update the itinerary"
+      status: 200,
+      response: "create new itinerary",
+      current_user: current_resource_owner,
+      request: params["data"],
+      createdItinerary: createdItinerary
     }
   end
 
+  def update
+    user_id = current_resource_owner["id"]
+    itinerary_id = params["id"]
+
+    request = params["data"]
+    itinerary = Itinerary.find(itinerary_id)
+
+    updatedItinerary = itinerary.update({
+        title: request["title"],
+        country: request["country"],
+        startDate: request["startDate"],
+        endDate: request["endDate"]
+      })
+
+    render json: {
+      response: "update the itinerary",
+      current_user: user_id,
+      itinerary_id: itinerary_id,
+      request: request,
+      updatedItinerary: updatedItinerary
+    }
+  end
+
+  #destory functionality not coded yet 
+  def destroy
+    user_id = current_resource_owner["id"]
+    itinerary_id = params["id"]
+
+    render json: {
+      response: "delete the itinerary, associated activities and photos",
+      current_user: user_id,
+      itinerary_id: itinerary_id,
+    }
+  end
 
 end
