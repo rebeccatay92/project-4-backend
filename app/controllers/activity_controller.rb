@@ -69,8 +69,17 @@ before_action -> { doorkeeper_authorize! :api }
   end
 
   def destroy
+    activity_id = params["activity_id"]
+    associatedPhotos = Photo.where({activity_id: activity_id})
+    deletedPhotos = associatedPhotos.each do |e|
+      id = e["id"]
+      Photo.delete(id)
+    end
+
     render json: {
-      response: "remove the activity and associated photos"
+      response: "remove the activity and associated photos",
+      activity_id: activity_id,
+      deletedPhotos: deletedPhotos
     }
   end
 
