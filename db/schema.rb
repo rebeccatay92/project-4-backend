@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20170901021304) do
 
   create_table "activities", force: :cascade do |t|
     t.bigint "itinerary_id"
+    t.integer "day"
     t.string "place"
     t.string "latitude"
     t.string "longitude"

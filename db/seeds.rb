@@ -24,10 +24,12 @@
   })
 end
 
+
 # creating activities
 3.times do |i|
   Activity.create({
     itinerary_id: 1,
+    day: 1,
     :place => Faker::HarryPotter.location,
     :latitude => Faker::Address.latitude,
     :longitude => Faker::Address.longitude,
