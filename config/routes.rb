@@ -24,8 +24,13 @@ Rails.application.routes.draw do
   post '/profile', to: 'itinerary#create'
   delete '/profile/:id', to: 'itinerary#destroy'
 
+  post '/fetchDay', to: 'activity#fetchDay'
+
   post '/activity', to: 'activity#create'
   patch '/activity', to: 'activity#update'
   delete '/activity', to: 'activity#destroy'
 
+  post '/photo', to: 'photo#create'
+  patch '/photo', to: 'photo#update'
+  delete '/photo', to: 'photo#destroy'
 end

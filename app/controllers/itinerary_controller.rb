@@ -74,7 +74,7 @@ before_action -> { doorkeeper_authorize! :api }
     }
   end
 
-  #destory functionality not coded yet 
+  #destroy functionality not coded yet 
   def destroy
     user_id = current_resource_owner["id"]
     itinerary_id = params["id"]
