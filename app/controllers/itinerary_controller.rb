@@ -15,8 +15,10 @@ before_action -> { doorkeeper_authorize! :api }
   def edit
     user_id = current_resource_owner["id"]
     itinerary_id = params["id"]
-    itinerary = Itinerary.find(itinerary_id)
-    activities = itinerary.activities
+    # need extra user_id condition in find so ppl cannot access itinerary of other user by modifying url
+    itinerary = Itinerary.where({user_id: user_id, id:itinerary_id})
+
+    activities = itinerary[0].activities
     photos = activities.map{|e| Photo.where({activity_id: e.id}) }
 
     render json: {
