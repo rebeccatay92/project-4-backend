@@ -8,6 +8,7 @@ gem 'spring', :group => :development
 
 gem 'pg'
 gem 'faker'
+gem 'pry'
 gem 'devise'
 gem 'doorkeeper'
 gem 'rack-cors', :require => 'rack/cors'
