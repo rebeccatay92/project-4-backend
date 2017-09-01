@@ -14,12 +14,12 @@ Rails.application.routes.draw do
 
   end
 
-  get '/', to: 'static#home', as: 'home'
+  get '/', to: 'static#index'
 
   get '/blog/:id', to: 'static#show'
 
-  get '/profile', to: 'itinerary#showAll'
-  get '/profile/:id', to: 'itinerary#edit'
+  get '/profile', to: 'itinerary#index'
+  get '/profile/:id', to: 'itinerary#show'
   patch '/profile/:id', to: 'itinerary#update'
   post '/profile', to: 'itinerary#create'
 

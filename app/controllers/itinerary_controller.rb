@@ -1,7 +1,7 @@
 class ItineraryController < ApplicationController
 before_action -> { doorkeeper_authorize! :api }
 
-  def showAll
+  def index
     user_id = current_resource_owner["id"]
     allItineraries = Itinerary.where({user_id: user_id})
 
@@ -12,7 +12,7 @@ before_action -> { doorkeeper_authorize! :api }
     }
   end
 
-  def edit
+  def show
     user_id = current_resource_owner["id"]
     itinerary_id = params["id"]
     # need extra user_id condition in find so ppl cannot access itinerary of other user by modifying url
@@ -31,16 +31,17 @@ before_action -> { doorkeeper_authorize! :api }
     }
   end
 
+  def create
+    render json: {
+      response: "create new itinerary"
+    }
+  end
+  
   def update
     render json: {
       response: "update the itinerary"
     }
   end
 
-  def create
-    render json: {
-      response: "create new itinerary"
-    }
-  end
 
 end

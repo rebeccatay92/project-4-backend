@@ -1,6 +1,6 @@
 class StaticController < ApplicationController
 
-  def home
+  def index
     allItineraries = Itinerary.all
     render json: {
       response: "this is homepage",
