@@ -7,10 +7,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 #creating test user
-# User.create({
-#   email: "test123@gmail.com",
-#   password: "test123"
-# })
+User.create({
+  email: "test123@gmail.com",
+  password: "test123",
+  name: "tester"
+})
 
 # creating itineraries
 5.times do |i|
