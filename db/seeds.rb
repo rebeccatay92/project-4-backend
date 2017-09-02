@@ -20,8 +20,7 @@ User.create({
       title: "Itinerary #{i + 1}",
       :country => Faker::Address.country,
       :bannerUrl => Faker::Placeholdit.image,
-      :startDate => Faker::Date.backward(2),
-      :endDate => Faker::Date.forward(2)
+      :days => 3
   })
 end
 
