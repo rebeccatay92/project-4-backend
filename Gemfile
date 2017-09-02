@@ -5,6 +5,7 @@ gem 'rails', '~> 5.1.3'
 
 gem 'spring', :group => :development
 
+gem 'puma'
 
 gem 'pg'
 gem 'faker'
