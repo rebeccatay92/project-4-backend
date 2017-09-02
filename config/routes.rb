@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   post '/profile', to: 'itinerary#create'
   delete '/profile/:id', to: 'itinerary#destroy'
 
-  post '/fetchDay', to: 'activity#fetchDay'
+  get '/activity/:itinerary_id/:day', to: 'activity#fetchDay'
 
   post '/activity', to: 'activity#create'
   patch '/activity', to: 'activity#update'

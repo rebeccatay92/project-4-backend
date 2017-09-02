@@ -23,7 +23,6 @@ before_action -> { doorkeeper_authorize! :api }
       render json: {
         response: "when user clicks that day, show all activities for that day",
         status: 200,
-        params: params,
         itinerary_id: itinerary_id,
         day: day,
         activities: activities,
