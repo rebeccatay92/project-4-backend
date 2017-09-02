@@ -10,9 +10,27 @@ Rails.application.routes.draw do
 
     namespace :v1 do
       get 'users/sync', to: 'users#sync'
-      get 'users/test', to: 'users#test'
     end
 
   end
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  get '/', to: 'static#index'
+
+  get '/blog/:id', to: 'static#show'
+
+  get '/profile', to: 'itinerary#index'
+  get '/profile/:id', to: 'itinerary#show'
+  patch '/profile/:id', to: 'itinerary#update'
+  post '/profile', to: 'itinerary#create'
+  delete '/profile/:id', to: 'itinerary#destroy'
+
+  post '/fetchDay', to: 'activity#fetchDay'
+
+  post '/activity', to: 'activity#create'
+  patch '/activity', to: 'activity#update'
+  delete '/activity', to: 'activity#destroy'
+
+  post '/photo', to: 'photo#create'
+  patch '/photo', to: 'photo#update'
+  delete '/photo', to: 'photo#destroy'
 end
