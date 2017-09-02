@@ -109,6 +109,7 @@ before_action -> { doorkeeper_authorize! :api }
 
       render json: {
         response: "delete the itinerary, all associated activities and photos",
+        status: 200,
         itinerary_id: itinerary_id,
         deletedPhotos: deletedPhotos,
         deletedActivities: deletedActivities,
