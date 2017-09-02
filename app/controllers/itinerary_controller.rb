@@ -74,22 +74,18 @@ before_action -> { doorkeeper_authorize! :api }
     }
   end
 
-  #destroy functionality not fixed yet
   def destroy
     itinerary_id = params["id"]
     itinerary = Itinerary.find(itinerary_id)
     activities = itinerary.activities
-    # activityIds = associatedActivities.map( (e) => e["id"] )
 
     photos = activities.map{|e| Photo.where({activity_id: e.id}) }
     photos.flatten!
 
     deletedPhotos = photos.each do |e|
-      id = e["id"]
-      Photo.delete(id)
+      Photo.delete(e)
     end
     deletedActivities = activities.each do |e|
-      id = e["id"]
       Activity.delete(e)
     end
     deletedItinerary = Itinerary.delete(itinerary_id)
@@ -99,7 +95,7 @@ before_action -> { doorkeeper_authorize! :api }
       itinerary_id: itinerary_id,
       deletedPhotos: deletedPhotos,
       deletedActivities: deletedActivities,
-      deletedItinerary: deletedItinerary      
+      deletedItinerary: deletedItinerary
     }
   end
 
