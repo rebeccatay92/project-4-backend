@@ -7,10 +7,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 #creating test user
-# User.create({
-#   email: "test123@gmail.com",
-#   password: "test123"
-# })
+User.create({
+  email: "test123@gmail.com",
+  password: "test123",
+  name: "tester"
+})
 
 # creating itineraries
 5.times do |i|
@@ -19,8 +20,7 @@
       title: "Itinerary #{i + 1}",
       :country => Faker::Address.country,
       :bannerUrl => Faker::Placeholdit.image,
-      :startDate => Faker::Date.backward(2),
-      :endDate => Faker::Date.forward(2)
+      :days => 3
   })
 end
 

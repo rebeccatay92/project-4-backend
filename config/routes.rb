@@ -22,13 +22,15 @@ Rails.application.routes.draw do
 
   get '/blog/:id', to: 'static#show'
 
+  get '/user/:id', to: 'static#findUser'
+
   get '/profile', to: 'itinerary#index'
   get '/profile/:id', to: 'itinerary#show'
   patch '/profile/:id', to: 'itinerary#update'
   post '/profile', to: 'itinerary#create'
   delete '/profile/:id', to: 'itinerary#destroy'
 
-  post '/fetchDay', to: 'activity#fetchDay'
+  get '/activity/:itinerary_id/:day', to: 'activity#fetchDay'
 
   post '/activity', to: 'activity#create'
   patch '/activity', to: 'activity#update'
