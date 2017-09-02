@@ -76,24 +76,30 @@ before_action -> { doorkeeper_authorize! :api }
 
   #destroy functionality not fixed yet
   def destroy
-    # itinerary_id = params["id"]
-    # thisItinerary = Itinerary.find(itinerary_id)
-    # associatedActivities = thisItinerary.activities
+    itinerary_id = params["id"]
+    itinerary = Itinerary.find(itinerary_id)
+    activities = itinerary.activities
     # activityIds = associatedActivities.map( (e) => e["id"] )
-    #
-    # photosToDelete = associatedActivities.map{|e| Photo.where({activity_id: e.id}) }
 
-    # deletedActivities = associatedActivities.each do |e|
-    #   Activity.delete(e["id"])
-    # end
+    photos = activities.map{|e| Photo.where({activity_id: e.id}) }
+    photos.flatten!
 
-    # Itinerary.delete(itinerary_id)
+    deletedPhotos = photos.each do |e|
+      id = e["id"]
+      Photo.delete(id)
+    end
+    deletedActivities = activities.each do |e|
+      id = e["id"]
+      Activity.delete(e)
+    end
+    deletedItinerary = Itinerary.delete(itinerary_id)
 
     render json: {
-      response: "delete the itinerary, all associated activities and photos"
-      # itinerary_id: itinerary_id,
-      # activityIds: activityIds,
-      # photosToDelete: photosToDelete
+      response: "delete the itinerary, all associated activities and photos",
+      itinerary_id: itinerary_id,
+      deletedPhotos: deletedPhotos,
+      deletedActivities: deletedActivities,
+      deletedItinerary: deletedItinerary      
     }
   end
 
