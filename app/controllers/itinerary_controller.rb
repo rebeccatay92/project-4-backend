@@ -17,12 +17,11 @@ before_action -> { doorkeeper_authorize! :api }
     itinerary_id = params["id"]
     # need extra user_id condition in find so ppl cannot access itinerary of other user by modifying url
     itinerary = Itinerary.find(itinerary_id)
-    owner = itinerary.user
 
     activities = itinerary.activities
     photos = activities.map{|e| Photo.where({activity_id: e.id}) }
 
-    if user_id == owner["id"]
+    if user_id == itinerary["user_id"]
       render json: {
         response: "Returning requested itinerary",
         status: 200,
@@ -67,7 +66,7 @@ before_action -> { doorkeeper_authorize! :api }
     request = params["data"]
     itinerary = Itinerary.find(itinerary_id)
 
-    if user_id == itinerary["id"]
+    if user_id == itinerary["user_id"]
       updatedItinerary = itinerary.update({
           title: request["title"],
           country: request["country"],
@@ -85,32 +84,42 @@ before_action -> { doorkeeper_authorize! :api }
         status: 401
       }
     end
-    
+
   end
 
   def destroy
+    user_id = current_resource_owner["id"]
     itinerary_id = params["id"]
+
     itinerary = Itinerary.find(itinerary_id)
-    activities = itinerary.activities
 
-    photos = activities.map{|e| Photo.where({activity_id: e.id}) }
-    photos.flatten!
+    if user_id == itinerary["user_id"]
+      activities = itinerary.activities
 
-    deletedPhotos = photos.each do |e|
-      Photo.delete(e)
+      photos = activities.map{|e| Photo.where({activity_id: e.id}) }
+      photos.flatten!
+
+      deletedPhotos = photos.each do |e|
+        Photo.delete(e)
+      end
+      deletedActivities = activities.each do |e|
+        Activity.delete(e)
+      end
+      deletedItinerary = Itinerary.delete(itinerary_id)
+
+      render json: {
+        response: "delete the itinerary, all associated activities and photos",
+        itinerary_id: itinerary_id,
+        deletedPhotos: deletedPhotos,
+        deletedActivities: deletedActivities,
+        deletedItinerary: deletedItinerary
+      }
+    else
+      render json: {
+        response: "unauthorized request",
+        status: 401
+      }
     end
-    deletedActivities = activities.each do |e|
-      Activity.delete(e)
-    end
-    deletedItinerary = Itinerary.delete(itinerary_id)
-
-    render json: {
-      response: "delete the itinerary, all associated activities and photos",
-      itinerary_id: itinerary_id,
-      deletedPhotos: deletedPhotos,
-      deletedActivities: deletedActivities,
-      deletedItinerary: deletedItinerary
-    }
   end
 
 end
