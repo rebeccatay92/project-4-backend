@@ -16,19 +16,28 @@ before_action -> { doorkeeper_authorize! :api }
     user_id = current_resource_owner["id"]
     itinerary_id = params["id"]
     # need extra user_id condition in find so ppl cannot access itinerary of other user by modifying url
-    itinerary = Itinerary.where({user_id: user_id, id:itinerary_id})
+    itinerary = Itinerary.find(itinerary_id)
+    owner = itinerary.user
 
-    activities = itinerary[0].activities
+    activities = itinerary.activities
     photos = activities.map{|e| Photo.where({activity_id: e.id}) }
 
-    render json: {
-      response: "show one itinerary by logged in user for editing",
-      user_id: user_id,
-      itinerary_id: itinerary_id,
-      itinerary: itinerary,
-      activities: activities,
-      photos: photos
-    }
+    if user_id == owner["id"]
+      render json: {
+        response: "Returning requested itinerary",
+        status: 200,
+        user_id: user_id,
+        itinerary_id: itinerary_id,
+        itinerary: itinerary,
+        activities: activities,
+        photos: photos
+      }
+    else
+      render json: {
+        response: "Unauthorized usage. user_id does not match itinerary owner",
+        status: 401
+      }
+    end
   end
 
   def create
@@ -58,20 +67,25 @@ before_action -> { doorkeeper_authorize! :api }
     request = params["data"]
     itinerary = Itinerary.find(itinerary_id)
 
-    updatedItinerary = itinerary.update({
-        title: request["title"],
-        country: request["country"],
-        startDate: request["startDate"],
-        endDate: request["endDate"]
-      })
-
-    render json: {
-      response: "update the itinerary",
-      current_user: user_id,
-      itinerary_id: itinerary_id,
-      request: request,
-      updatedItinerary: updatedItinerary
-    }
+    if user_id == itinerary["id"]
+      updatedItinerary = itinerary.update({
+          title: request["title"],
+          country: request["country"],
+          startDate: request["startDate"],
+          endDate: request["endDate"]
+        })
+      render json: {
+        response: "update the itinerary",
+        current_user: user_id,
+        updatedItinerary: updatedItinerary
+      }
+    else
+      render json: {
+        response: "unauthorized request",
+        status: 401
+      }
+    end
+    
   end
 
   def destroy
