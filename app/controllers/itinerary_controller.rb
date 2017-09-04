@@ -47,8 +47,8 @@ before_action -> { doorkeeper_authorize! :api }
       user_id: user_id,
       title: request["title"],
       country: request["country"],
-      startDate: request["startDate"],
-      endDate: request["endDate"]
+      bannerUrl: request["bannerUrl"],
+      days: request["days"]
       })
     render json: {
       status: 200,
@@ -70,8 +70,8 @@ before_action -> { doorkeeper_authorize! :api }
       updatedItinerary = itinerary.update({
           title: request["title"],
           country: request["country"],
-          startDate: request["startDate"],
-          endDate: request["endDate"]
+          bannerUrl: request["bannerUrl"],
+          days: request["days"]
         })
       render json: {
         response: "update the itinerary",
