@@ -16,7 +16,7 @@ module UserCreation
         origins '*'
         resource '*',
           headers: :any,
-          methods: [:get, :post, :delete, :put, :options],
+          methods: [:get, :post, :delete, :patch, :options],
           max_age: 0
       end
     end
