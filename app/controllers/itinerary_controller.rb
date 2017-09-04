@@ -8,7 +8,7 @@ before_action -> { doorkeeper_authorize! :api }
 
     render json: {
       response: "show all itineraries by logged in user",
-      user_id: user_id
+      user_id: user_id,
       allItineraries: allItineraries
     }
   end
