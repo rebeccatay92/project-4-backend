@@ -5,6 +5,8 @@ class CreateActivities < ActiveRecord::Migration[5.1]
       t.references :itinerary, foreign_key: true
 
       t.integer :day
+      t.integer :sequence
+      t.string :title
       t.string :place
       t.string :latitude
       t.string :longitude
