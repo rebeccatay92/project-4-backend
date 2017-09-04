@@ -3,17 +3,19 @@ before_action -> { doorkeeper_authorize! :api }
 
   def index
     user_id = current_resource_owner["id"]
+    current_user_name = current_resource_owner["name"]
     allItineraries = Itinerary.where({user_id: user_id})
 
     render json: {
       response: "show all itineraries by logged in user",
-      user_id: user_id,
+      user_id: user_id
       allItineraries: allItineraries
     }
   end
 
   def show
     user_id = current_resource_owner["id"]
+    current_user_name = current_resource_owner["name"]
     itinerary_id = params["id"]
     # need extra user_id condition in find so ppl cannot access itinerary of other user by modifying url
     itinerary = Itinerary.find(itinerary_id)

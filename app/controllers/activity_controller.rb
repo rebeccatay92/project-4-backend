@@ -47,6 +47,8 @@ before_action -> { doorkeeper_authorize! :api }
       createdActivity = Activity.create({
         itinerary_id: itinerary_id,
         day: request["day"],
+        sequence: request["sequence"],
+        title: request["title"],
         place: request["place"],
         latitude: request["latitude"],
         longitude: request["longitude"],
@@ -80,6 +82,8 @@ before_action -> { doorkeeper_authorize! :api }
 
       updatedActivity = activity.update({
         day: request["day"],
+        sequence: request["sequence"],
+        title: request["title"],
         place: request["place"],
         latitude: request["latitude"],
         longitude: request["longitude"],
