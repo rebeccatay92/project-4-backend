@@ -7,6 +7,7 @@ class CreateItineraries < ActiveRecord::Migration[5.1]
       t.string :country
       t.string :bannerUrl
       t.integer :days
+      t.boolean :published
 
       t.timestamps
     end
