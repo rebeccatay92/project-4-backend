@@ -1,7 +1,7 @@
 class StaticController < ApplicationController
 
   def index
-    allItineraries = Itinerary.all
+    allItineraries = Itinerary.where({published: true})
     render json: {
       response: "this is homepage",
       current_user_id: current_resource_owner["id"],

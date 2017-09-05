@@ -50,7 +50,8 @@ before_action -> { doorkeeper_authorize! :api }
       title: request["title"],
       country: request["country"],
       bannerUrl: request["bannerUrl"],
-      days: request["days"]
+      days: 1,
+      published: false
       })
     render json: {
       status: 200,
@@ -73,7 +74,8 @@ before_action -> { doorkeeper_authorize! :api }
           title: request["title"],
           country: request["country"],
           bannerUrl: request["bannerUrl"],
-          days: request["days"]
+          days: request["days"],
+          published: request["published"]
         })
       render json: {
         response: "update the itinerary",
