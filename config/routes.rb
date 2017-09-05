@@ -24,6 +24,8 @@ Rails.application.routes.draw do
 
   get '/user/:id', to: 'static#findUser'
 
+  get '/currentuser', to: 'currentuser#show'
+
   get '/profile', to: 'itinerary#index'
   get '/profile/:id', to: 'itinerary#show'
   patch '/profile/:id', to: 'itinerary#update'
